@@ -24,6 +24,7 @@
         [v-cloak] {
             display: none;
         }
+
         input {
             margin: 10px;
             display: block;
@@ -33,7 +34,7 @@
 <body>
 <div id="app" v-cloak>
 
-    <custom-form />
+    <custom-form/>
 
     <hr/>
     <button @click.prevent.stop="toggleBox">Toggle Box</button>
@@ -59,20 +60,23 @@
             }
         }
     })
-    app.component("custom-form", {
+    app.component("login-form", {
         template: `
           <form @submit.prevent="handleSubmit">
           <h1>{{ title }}</h1>
-          <input type="email" v-model="email"/>
-          <input type="password" v-model="password"/>
+          <custom-input v-model="email" :label="passwordLabel"/>
+          <custom-input v-model="password" v-bind:label="emailLabel"/>
           <button>Log in</button>
           </form>
         `,
+        components: ["custom-input"],
         data() {
             return {
                 title: "Login form",
                 email: "",
-                password: ""
+                password: "",
+                emailLabel: "Email",
+                passwordLabel: "Password"
             }
         },
         methods: {
@@ -80,6 +84,31 @@
                 console.log(login, password, email)
             }
         }
+    })
+    app.component("custom-input", {
+        template: `
+          <label>
+          {{ label }}
+          <input type="text" v-model="inputValue"/>
+          </label>
+        `,
+        props: ["label", "modelValue"],
+        computed: {
+            inputValue: {
+                get() {
+                    return this.modelValue
+                },
+                set(value) {
+                    console.log(value)
+                    this.$emit("update:modelValue", value)
+                }
+            }
+        }
+        // data() {
+        //     return {
+        //         inputValue: ""
+        //     }
+        // }
     })
     app.mount("#app")
 </script>
