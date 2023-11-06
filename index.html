@@ -5,12 +5,24 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <title>Vue Bascis</title>
 </head>
 <body>
-<div>
-    <h1>Hello vue!</h1>
+<div id="app">
+    {{ greeting }}
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    let app = Vue.createApp({
+        data: function() {
+            return {
+                greeting: "Hello Vue 3!"
+            }
+        }
+    })
+    app.mount("#app")
+</script>
 </div>
 </body>
 </html>
